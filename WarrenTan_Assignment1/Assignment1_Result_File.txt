@@ -1,5 +1,4 @@
 There are 6 emails to read.
-
 Next email:
     Sender: Boss
     Subject: Never Mind
@@ -8,5 +7,4 @@ Next email:
     Sender: Boss
     Subject: Important
     Date: 12-20-2024
-
 There are 4 emails to read.
