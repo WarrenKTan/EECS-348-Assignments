@@ -13,11 +13,8 @@ Creation Date: 27/08/2025
 filePath = "Assignment1_Test_File.txt"
 
 def main():
-    # make a max heap to hold emails
-    # myMaxHeap
-
-    # temp list to hold variables
-    priorityList = []
+    # make a max heap to hold/prioritise emails
+    myMaxHeap = maxHeap()
 
     # "open" function obtained from stackOverflow
     # takes "fileName" and reads it line-by-line
@@ -27,14 +24,14 @@ def main():
             # get the first word of command (ex: "EMAIL", "COUNT", "NEXT", "READ")
             match line.strip().split(" ")[0]:
                 case "EMAIL": # registers information about email
-                    priorityList.append(Email(line[6:]))
+                    myMaxHeap.insert(Email(line[6:]))
                 case "COUNT": # returns # of unread emails
-                    print(f"COMMAND COUNT: There are {'myMaxHeapSize'} emails to read.")
+                    print(f"There are {myMaxHeap.size} emails to read.")
                 case "NEXT": # find next email in priority list
-                    print("COMMAND NEXT: Finding next email... (no output for \'NEXT\')")
-                case "READ": # output email at current 
-                    print("COMMAND READ: Reading current email.")
-                case default: # no command found
+                    print(f"{myMaxHeap.data[-1] if myMaxHeap.size > 0 else 'There are no emails to read'}")
+                case "READ": # output email at current index
+                    myMaxHeap.pop()
+                case _: # no command found
                     print(f"There was no command found on line: {line}")
 
 class Email:
@@ -59,7 +56,7 @@ class Email:
     # information in string for output
     def __str__(self):
         output = ""
-        output += f"Next Email:\n\tSender: {self.sender}\n\tSubject: {self.subject}\n\tDate: {self.date}"
+        output += f"Next email:\n\tSender: {self.sender}\n\tSubject: {self.subject}\n\tDate: {self.date}"
         return output
 
     # greater than attempts to sort by sender, then whichever was sent last
@@ -103,6 +100,35 @@ class Email:
         prioBool = self.senderPrio == other.senderPrio
         dateBool = self.date == other.date
         return prioBool and dateBool
+
+class maxHeap:
+    def __init__(self, data=None):
+        if data == None:
+            self.data = []
+            self.size = 0
+        else:
+            self.data = data
+            self.size = len(data)
+    
+    def insert(self, element):
+        self.data.append(element)
+        self.size += 1
+        self.heapify()
+
+    def heapify(self):
+        # iterate backwards through list
+        for i, _ in reversed(list(enumerate(self.data))):
+            # fix heap by swapping parent and repeating until correct
+            while i != 0 and self.data[i] > self.data[i // 2]:
+                self.data[i], self.data[i // 2] = self.data[i // 2], self.data[i]
+                i //= 2
+
+    def pop(self):
+        if self.size > 0:
+            self.data.pop(-1)
+            self.size -= 1
+        else:
+            print(f"No elements in heap")
 
 if __name__ == "__main__":
     main()
