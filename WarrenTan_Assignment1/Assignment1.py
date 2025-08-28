@@ -1,8 +1,8 @@
 '''
 Program Name: EECS 348 Assignment 1
-Description: 
+Description: show emails based on a priority queue managed by a maxHeap
 Inputs: test file labelled "Assignment1_Test_File.txt"
-Outputs: Next email and number of unread emails
+Outputs: next email and number of unread emails
 Collaborators: 
 Other Sources: stackOverflow
 Author: Warren Tan
